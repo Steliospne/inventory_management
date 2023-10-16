@@ -9,6 +9,7 @@ class InventoryItem(models.Model):
 	category = models.ForeignKey('Category', on_delete=models.SET_NULL, blank=True, null=True)
 	date_created = models.DateTimeField(auto_now_add=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	image = models.ImageField(default='default.png', upload_to='items_img')
 
 	def __str__(self):
 		return self.name

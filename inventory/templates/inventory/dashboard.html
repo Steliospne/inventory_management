@@ -9,9 +9,10 @@
 				<a href="{% url 'add-item' %}" class="btn btn-primary">+</a>
 			</div>
 			<br>
-			<table class="table table-hover table-striped">
+			<table class="table table-hover table-striped display">
 				<thead>
 					<tr>
+						<th scope="col"></th>
 						<th scope="col">ID</th>
 						<th scope="col">Name</th>
 						<th scope="col">Qty</th>
@@ -25,6 +26,7 @@
 					{% if items|length == 0 %}
 					<tr>
 						<th scope="row">-</th>
+						<td></td>
 						<td>-</td>
 						<td>-</td>
 						<td>-</td>
@@ -36,6 +38,7 @@
 
 					{% for item in items %}
 					<tr>
+						<td><img src="{{ item.image.url }}" width="100", height="100"></td>
 						<th scope="row">{{ item.id }}</th>
 						<td>{{ item.name }}</td>
 						{% if item.id in low_inventory_ids %}

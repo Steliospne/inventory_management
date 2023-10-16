@@ -10,9 +10,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.RemoveField(
             model_name='inventoryitem',
-            name='image',
-            field=models.ImageField(default='default.png', upload_to='items_img'),
+            name='image'
+            
         ),
     ]

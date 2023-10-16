@@ -72,7 +72,7 @@ class AddItem(LoginRequiredMixin, CreateView):
 class EditItem(LoginRequiredMixin, UpdateView):
 	model = InventoryItem
 	form_class = InventoryItemForm
-	template_name = 'inventory/item_form.html'
+	template_name = 'inventory/edit_item_form.html'
 	success_url = reverse_lazy('dashboard')
 
 class DeleteItem(LoginRequiredMixin, DeleteView):

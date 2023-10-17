@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import Index, SignUpView, Dashboard, AddItem, EditItem, DeleteItem
+from .views import Index, SignUpView, Dashboard, AddItem, EditItem, DeleteItem, Dashboard_open
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', Index.as_view(), name='index'),
     path('dashboard/', Dashboard.as_view(), name='dashboard'),
+    path('dashboard_open/', Dashboard_open.as_view(), name='dashboard_open'),
     path('add-item/', AddItem.as_view(), name='add-item'),
     path('edit-item/<int:pk>', EditItem.as_view(), name='edit-item'),
     path('delete-item/<int:pk>', DeleteItem.as_view(), name='delete-item'),

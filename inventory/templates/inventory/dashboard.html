@@ -1,70 +1,93 @@
-{% extends 'inventory/base.html' %}
-
+{% extends 'inventory/base.html' %} 
 {% block content %}
 
-	<div class="row">
-		<div class="col-md-10 col-12 mx-auto mt-5">
-			<div class="d-flex justify-content-end">
-				<input type="search" class="form-control form-control-sm" placeholder="Search" id="myInput">
-				<a href="{% url 'add-item' %}" class="btn btn-primary">+</a>
-			</div>
-			<br>
-			<table class="table table-hover table-striped display">
-				<thead>
-					<tr>
-						<th scope="col"></th>
-						<th scope="col">ID</th>
-						<th scope="col">Name</th>
-						<th scope="col">Qty</th>
-						<th scope="col">Category</th>
-						<th scope="col">Tag</th>
-						<th scope="col"></th>
-						<th scope="col"></th>
-					</tr>
-				</thead>
-				<tbody id="datatable">
-					{% if items|length == 0 %}
-					<tr>
-						<th scope="row">-</th>
-						<td></td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td></td>
-					</tr>
-					{% endif %}
+<div class="row">
+    <div class="col-md-10 col-12 mx-auto mt-5">
+        <div class="d-flex justify-content-end">
+            <input
+                type="search"
+                class="form-control form-control-sm"
+                placeholder="Search"
+                id="myInput"
+            />
+            <a href="{% url 'add-item' %}" class="btn btn-primary">+</a>
+        </div>
+        <br />
+        <table class="table table-hover table-striped display">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Tag</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="datatable">
+                {% if items|length == 0 %}
+                <tr>
+                    <th scope="row">-</th>
+                    <td></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                {% endif %} {% for item in items %}
+                <tr>
+                    <td>
+                        <img
+                            src="{{ item.image.url }}"
+                            width="100"
+                            ,
+                            height="100"
+                        />
+                    </td>
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.name }}</td>
+                    {% if item.id in low_inventory_ids %}
+                    <td class="text-danger">{{ item.quantity }}</td>
+                    {% else %}
+                    <td class="text-success">{{ item.quantity }}</td>
+                    {% endif %}
+                    <td>{{ item.category.name }}</td>
+                    <td>{{ item.tag }}</td>
+                    <td>
+                        <a
+                            href="{% url 'edit-item' item.id %}"
+                            class="btn btn-outline-secondary"
+                            >Edit</a
+                        >
+                    </td>
+                    <td>
+                        <a
+                            href="{% url 'delete-item' item.id %}"
+                            class="btn btn-secondary"
+                            >Delete</a
+                        >
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-					{% for item in items %}
-					<tr>
-						<td><img src="{{ item.image.url }}" width="100", height="100"></td>
-						<th scope="row">{{ item.id }}</th>
-						<td>{{ item.name }}</td>
-						{% if item.id in low_inventory_ids %}
-							<td class="text-danger">{{ item.quantity }}</td>
-						{% else %}
-							<td class="text-success">{{ item.quantity }}</td>
-						{% endif %}
-						<td>{{ item.category.name }}</td>
-						<td>{{ item.tag }}</td>
-						<td><a href="{% url 'edit-item' item.id %}" class="btn btn-outline-secondary">Edit</a></td>
-						<td><a href="{% url 'delete-item' item.id %}" class="btn btn-secondary">Delete</a></td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-		
-		<script>
-			$(document).ready(function(){
-				$("#myInput").on("keyup", function() {
-					var value = $(this).val().toLowerCase();
-					$("#datatable tr").filter(function() {
-						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-					});
-			  	});
-			});
-		</script>
-	</div>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#datatable tr").filter(function () {
+                    $(this).toggle(
+                        $(this).text().toLowerCase().indexOf(value) > -1
+                    );
+                });
+            });
+        });
+    </script>
+</div>
 {% endblock content %}
